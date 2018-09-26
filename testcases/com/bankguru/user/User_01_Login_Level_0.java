@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 
-public class User_01_RegisterAndLoginToSystem {
+public class User_01_Login_Level_0 {
 	WebDriver driver;
 	WebDriverWait wait;
 	private String userID, password, loginPageUrl;
