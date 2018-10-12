@@ -1,10 +1,54 @@
 package page.objects;
 
-public class LoginPageObject {
- /*ACTION IN PAGE
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import commons.AbstractPage;
+import page.ui.LoginPageUI;
+
+public class LoginPageObject extends AbstractPage {
+	WebDriver driver;
+	
+	
+ public LoginPageObject(WebDriver mappingDriver) {
+		
+		driver = mappingDriver;
+	}
+ public LoginPageObject(WebDriver mappingDrive, WebDriverWait wait) {
+		
+		driver = mappingDrive;
+	}
+
+/*ACTION IN PAGE
 	- Input username
 	- Input password
 	- Click SUBMIT button
 	- Click 'here' link
 	*/
+	public String getLoginPageUrl() {
+		return getCurrentPageUrl(driver);
+	}
+	
+	public void inputToUserIDTextbox(String userName) {
+		waitForControlVisible(driver, LoginPageUI.USERID_TEXTBOX);
+		sendKeyToElement(driver, LoginPageUI.USERID_TEXTBOX, userName);
+	}
+	
+	public void inputToPasswordTextbox(String password) {
+		waitForControlVisible(driver, LoginPageUI.PASSWORD_TEXTBOX);
+		sendKeyToElement(driver, LoginPageUI.PASSWORD_TEXTBOX, password);
+	}
+	
+	public void clickToLoginButton() {
+		waitForControlVisible(driver, LoginPageUI.LOGIN_BUTTON);
+		clickToElement(driver, LoginPageUI.LOGIN_BUTTON);
+	}
+	public void clickHereLink() {
+		waitForControlVisible(driver, LoginPageUI.HERE_LINK);
+		clickToElement(driver, LoginPageUI.HERE_LINK);
+	}
+	public void openLoginPage(String url) {
+		openAnyUrl(driver, url);
+	}
+	
 }

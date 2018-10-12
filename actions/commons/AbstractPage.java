@@ -111,9 +111,9 @@ public class AbstractPage {
 		}
 	}
 	
-	public void isControlDisplay(WebDriver driver,String locator) {
+	public boolean isControlDisplay(WebDriver driver,String locator) {
 		WebElement element = driver.findElement(By.xpath(locator));
-		element.isDisplayed();
+		return element.isDisplayed();
 	}
 	
 	public void isControlEnable(WebDriver driver,String locator) {
@@ -231,8 +231,10 @@ public class AbstractPage {
     	  action.dragAndDrop(element, target);
       }
   	
-  	public void keyPress(WebDriver driver, String locator) {
-  		driver.findElement(By.xpath(locator)).sendKeys(Keys.ENTER);
+  	public void keyPress(WebDriver driver, String locator, Keys keyname) {
+  		WebElement element = driver.findElement(By.xpath(locator));
+  		Actions action =  new Actions(driver);
+  		action.sendKeys(element,keyname);
     }
   	
   	public void uploadFile(WebDriver driver, String filename) {

@@ -17,12 +17,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 
-public class User_01_Login_Level_1 {
+public class User_01_Login_Level_1_Abstractpage {
 	WebDriver driver;
 	private String userID, password, loginPageUrl;
 	private AbstractPage abstractPage;
 	@BeforeClass
-	  public void beforeClass() {
+ public void beforeClass() {
 		driver = new FirefoxDriver();
 		abstractPage = new AbstractPage();
 		abstractPage.openAnyUrl(driver, "http://demo.guru99.com/v4/");

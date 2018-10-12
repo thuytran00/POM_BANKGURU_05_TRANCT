@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="BANK GURU" parallel="false">
+<parameter name="url" value="http://demo.guru99.com/v4/" />
+  <test name="Run on Chrome">
+  	<parameter name="browser" value="firefox" />
+    <classes>
+      <class name="com.bankguru.user.User_01_Login_Level_2_PageObjectBasic"/>
+     
+    </classes>
+    </test>
+<!--    <test name="Run on Firefox"> -->
+<!--   	<parameter name="browser" value="firefox" /> -->
+<!--     <classes> -->
+<!--       <class name="com.bankguru.user.User_01_Login_Level_2_PageObjectBasic"/> -->
+     
+<!--     </classes> -->
+<!--     </test> -->
+<!--     <test name="Run on Headless"> -->
+<!--   	<parameter name="browser" value="headless" /> -->
+<!--     <classes> -->
+<!--       <class name="com.bankguru.user.User_01_Login_Level_2_PageObjectBasic"/> -->
+     
+<!--     </classes> -->
+<!--     </test> -->
+</suite> <!-- Suite -->
