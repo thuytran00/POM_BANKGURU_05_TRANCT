@@ -16,14 +16,30 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import page.objects.DeleteAccountPageObject;
+import page.objects.EditCustomerPageObject;
+import page.objects.HomePageObject;
+import page.objects.LoginPageObject;
+import page.objects.NewCustomerPageObject;
+import page.objects.PageFactoryManager;
+import page.objects.WithdrawPageObject;
+import page.ui.AbstractPageUI;
+
 public class AbstractPage {
-	
+	WebDriver driver;
+//	public AbstractPage(WebDriver driver_) {
+//		driver = driver_;
+//	}
 	public void openAnyUrl(WebDriver driver, String url) {
 		driver.get(url);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		
 	}
-	
+	public LoginPageObject openLoginPage( String url) {
+		openAnyUrl(driver, url);
+		return new LoginPageObject(driver);
+		
+	}
 	public void getPageTitle(WebDriver driver) {
 		driver.getTitle();
 	}
@@ -44,7 +60,11 @@ public class AbstractPage {
 		WebElement element =driver.findElement(By.xpath(locator));
 		element.click();
 	}
-	
+	public void clickToElement(WebDriver driver, String locator,String value) {
+		locator = String.format(locator, value);
+		WebElement element =driver.findElement(By.xpath(locator));
+		element.click();
+	}
 	public void sendKeyToElement(WebDriver driver, String locator, String value) {
 		WebElement element =driver.findElement(By.xpath(locator));
 		element.clear();
@@ -115,7 +135,11 @@ public class AbstractPage {
 		WebElement element = driver.findElement(By.xpath(locator));
 		return element.isDisplayed();
 	}
-	
+	public boolean isControlDisplay(WebDriver driver,String locator, String value) {
+		locator = String.format(locator, value);
+		WebElement element = driver.findElement(By.xpath(locator));
+		return element.isDisplayed();
+	}
 	public void isControlEnable(WebDriver driver,String locator) {
 		WebElement element = driver.findElement(By.xpath(locator));
 		element.isEnabled();
@@ -261,7 +285,13 @@ public class AbstractPage {
   		WebDriverWait wait = new WebDriverWait(driver, timeOut);
   		wait.until(ExpectedConditions.visibilityOfElementLocated(byElement));
   	}
-  	
+  	public void waitForControlVisible(WebDriver driver, String locator,String value) {
+  		locator = String.format(locator, value);
+  		//WebElement element=driver.findElement(By.xpath(locator));
+  		By byElement = By.xpath(locator);
+  		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+  		wait.until(ExpectedConditions.visibilityOfElementLocated(byElement));
+  	}
   	public void waitForControlInvisible(WebDriver driver, String locator) {
   		//WebElement element=driver.findElement(By.xpath(locator));
   		By byElement = By.xpath(locator);
@@ -291,4 +321,31 @@ public class AbstractPage {
   		wait.until(ExpectedConditions.alertIsPresent());
   	}
   	private int timeOut = 30;
+  	public HomePageObject openHomePage(WebDriver driver) {
+  	
+  		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"Manager");
+  		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK);
+  		return PageFactoryManager.openHomepage(driver);
+  	}
+  	public NewCustomerPageObject openNewCustomerPage(WebDriver driver) {
+  		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"New Customer");
+  		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"New Customer");
+  		return PageFactoryManager.openNewCustomerPage(driver);
+  	}
+  	public WithdrawPageObject openWithdrawPage(WebDriver driver) {
+  		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"Withdrawal");
+  		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"Withdrawal");
+  		return PageFactoryManager.openWithdrawPage(driver);
+  	}
+  	public EditCustomerPageObject openEditCustomerPage(WebDriver driver) {
+  		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"Edit Customer");
+  		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"Edit Customer");
+  		return PageFactoryManager.openEditCustomerPage(driver);
+  	}
+  	public DeleteAccountPageObject openDeletePage(WebDriver driver) {
+  		waitForControlVisible(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"Delete Account");
+  		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"Delete Account");
+  		return PageFactoryManager.openDeleteAccountPage(driver);
+  	}
+  	
 }

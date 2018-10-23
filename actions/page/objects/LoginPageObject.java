@@ -39,16 +39,17 @@ public class LoginPageObject extends AbstractPage {
 		sendKeyToElement(driver, LoginPageUI.PASSWORD_TEXTBOX, password);
 	}
 	
-	public void clickToLoginButton() {
+	public HomePageObject clickToLoginButton() {
 		waitForControlVisible(driver, LoginPageUI.LOGIN_BUTTON);
 		clickToElement(driver, LoginPageUI.LOGIN_BUTTON);
+		//return new HomePageObject(driver);
+		return PageFactoryManager.openHomepage(driver);
 	}
-	public void clickHereLink() {
+	public RegisterPageObject clickHereLink() {
 		waitForControlVisible(driver, LoginPageUI.HERE_LINK);
 		clickToElement(driver, LoginPageUI.HERE_LINK);
+		return PageFactoryManager.openRegisterPage(driver);
 	}
-	public void openLoginPage(String url) {
-		openAnyUrl(driver, url);
-	}
+	
 	
 }

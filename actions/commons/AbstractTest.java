@@ -1,5 +1,6 @@
 package commons;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -33,5 +34,11 @@ public class AbstractTest {
 		return driver;
 		
 	}
+	  public int randomNumber()
+	  {
+		  Random rand =new Random();
+		  int n= rand.nextInt(999999)+1;
+		  return n;
+	  }
 
 }

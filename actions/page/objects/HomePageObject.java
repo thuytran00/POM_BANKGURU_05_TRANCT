@@ -15,4 +15,5 @@ public class HomePageObject extends AbstractPage {
 		return isControlDisplay(driver, HomePageUI.WELCOME_MESSAGE);
 		
 	}
+	
 }
