@@ -1,6 +1,7 @@
 package commons;
 
 import java.util.List;
+import live.pageUIs.*;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +17,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import live.pageObjects.MyAccountPageObject;
+import live.pageObjects.RegisterPageObject;
 import page.objects.DeleteAccountPageObject;
 import page.objects.EditCustomerPageObject;
 import page.objects.HomePageObject;
@@ -24,7 +27,7 @@ import page.objects.NewCustomerPageObject;
 import page.objects.PageFactoryManager;
 import page.objects.WithdrawPageObject;
 import page.ui.AbstractPageUI;
-
+import live.pageUIs.*;
 public class AbstractPage {
 	WebDriver driver;
 //	public AbstractPage(WebDriver driver_) {
@@ -32,7 +35,7 @@ public class AbstractPage {
 //	}
 	public void openAnyUrl(WebDriver driver, String url) {
 		driver.get(url);
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(longTimeout, TimeUnit.SECONDS);
 		
 	}
 	public LoginPageObject openLoginPage( String url) {
@@ -70,6 +73,12 @@ public class AbstractPage {
 		element.clear();
 		element.sendKeys(value);
 	}
+	public void sendKeyToElement(WebDriver driver, String locator, String inputValue, String... values) {
+		locator = String.format(locator, (Object[]) values);
+		WebElement element =driver.findElement(By.xpath(locator));
+		element.clear();
+		element.sendKeys(inputValue);
+	}
 	
 	public void selectItemInDefaultDropdown(WebDriver driver, String locator, String item) {
 		Select select = new Select(driver.findElement(By.xpath(locator)));
@@ -79,7 +88,7 @@ public class AbstractPage {
 	public void selectItemInCustomDropDown(WebDriver driver,String dropdown, String valueItem, String listItems){
 		
 		WebElement dropdownElement = driver.findElement(By.xpath(dropdown));
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, longTimeout);
 		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", dropdownElement);
 		dropdownElement.click();
 		List <WebElement>allItems=driver.findElements(By.xpath(listItems));
@@ -347,5 +356,33 @@ public class AbstractPage {
   		clickToElement(driver, AbstractPageUI.DYNAMIC_PAGE_LINK,"Delete Account");
   		return PageFactoryManager.openDeleteAccountPage(driver);
   	}
+  	private int longTimeout =30;
+  	private int shortTimeout =10;
   	
+  	/*LIVE GURU PAGE*/
+  	public MyAccountPageObject openMyAccountPage(WebDriver driver) {
+  		waitForControlVisible(driver, LoginPageUI.ACCOUNT_LINK,"My Account");
+  		clickToElement(driver, LoginPageUI.ACCOUNT_LINK,"My Account");
+  		return live.pageObjects.PageFactoryManager.getMyAccountPage(driver);
+  	}
+  	public AbstractPage clickToDynamicButton(WebDriver driver, String titleName) {
+  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_BUTTON,titleName);
+  		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_BUTTON,titleName);
+  		return null;
+  		//return live.pageObjects.PageFactoryManager.getRegisterPage(driver);
+  	}
+  	public void sendKeytoDynamicTextbox(WebDriver driver, String textboxName, String value) {
+  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_TEXTBOX_RADIO_CHECKBOX,textboxName);
+  		sendKeyToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_TEXTBOX_RADIO_CHECKBOX,value,textboxName);
+  		//return null;
+  		//return live.pageObjects.PageFactoryManager.getRegisterPage(driver);
+  	}
+  	public live.pageObjects.HomePageObject openLogoutPage(WebDriver driver) {
+  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LABEL_TEXT,"Account");
+  		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LABEL_TEXT, "Account");
+  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LINK,"Log Out");
+  		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LINK,"Log Out");
+  		//return null;
+  		return live.pageObjects.PageFactoryManager.getHomePage(driver);
+  	}
 }
