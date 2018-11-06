@@ -21,5 +21,10 @@ public class PageFactoryManager {
 	public static MyDashbboardPageObject getMyDashboardPage(WebDriver driver) {
 		return new MyDashbboardPageObject(driver);
 	}
-	
+	public static MobilePageObject getMobilePage(WebDriver driver) {
+		return new MobilePageObject(driver);
+	}
+	public static TVPageObject getTVPage(WebDriver driver) {
+		return new TVPageObject(driver);
+	}
 }

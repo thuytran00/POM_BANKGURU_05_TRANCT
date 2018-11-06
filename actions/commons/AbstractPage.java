@@ -120,6 +120,11 @@ public class AbstractPage {
 		WebElement element = driver.findElement(By.xpath(locator));
 		return element.getText();
 	}
+	public String getTextElement(WebDriver driver,String locator, String... values) {
+		locator = String.format(locator, (Object[]) values);
+		WebElement element = driver.findElement(By.xpath(locator));
+		return element.getText();
+	}
 	
 	public int getSizeElement(WebDriver driver,String locator) {
 		List <WebElement> elements = driver.findElements(By.xpath(locator));
@@ -144,8 +149,8 @@ public class AbstractPage {
 		WebElement element = driver.findElement(By.xpath(locator));
 		return element.isDisplayed();
 	}
-	public boolean isControlDisplay(WebDriver driver,String locator, String value) {
-		locator = String.format(locator, value);
+	public boolean isControlDisplay(WebDriver driver,String locator, String... values) {
+		locator = String.format(locator, (Object[]) values);
 		WebElement element = driver.findElement(By.xpath(locator));
 		return element.isDisplayed();
 	}
@@ -294,9 +299,10 @@ public class AbstractPage {
   		WebDriverWait wait = new WebDriverWait(driver, timeOut);
   		wait.until(ExpectedConditions.visibilityOfElementLocated(byElement));
   	}
-  	public void waitForControlVisible(WebDriver driver, String locator,String value) {
-  		locator = String.format(locator, value);
+  	public void waitForControlVisible(WebDriver driver, String locator,String... value) {
+  		locator = String.format(locator,(Object[]) value);
   		//WebElement element=driver.findElement(By.xpath(locator));
+  		System.out.println(locator);
   		By byElement = By.xpath(locator);
   		WebDriverWait wait = new WebDriverWait(driver, timeOut);
   		wait.until(ExpectedConditions.visibilityOfElementLocated(byElement));
@@ -357,7 +363,7 @@ public class AbstractPage {
   		return PageFactoryManager.openDeleteAccountPage(driver);
   	}
   	private int longTimeout =30;
-  	private int shortTimeout =10;
+  	//private int shortTimeout =10;
   	
   	/*LIVE GURU PAGE*/
   	public MyAccountPageObject openMyAccountPage(WebDriver driver) {
@@ -384,5 +390,39 @@ public class AbstractPage {
   		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LINK,"Log Out");
   		//return null;
   		return live.pageObjects.PageFactoryManager.getHomePage(driver);
+  	}
+  	public AbstractPage openDynamicLiveGurupage(WebDriver driver,String pageName) {
+  		waitForControlVisible(driver,live.pageUIs.AbstractPageUI.DYNAMIC_COMMON_LINK,pageName );
+  		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_COMMON_LINK,pageName);
+  		
+  		switch(pageName) {
+  		case "Mobile":
+  			return live.pageObjects.PageFactoryManager.getMobilePage(driver);
+  		case "TV":
+  			return live.pageObjects.PageFactoryManager.getTVPage(driver);
+  		default:
+  			return live.pageObjects.PageFactoryManager.getHomePage(driver);
+  		}
+  	}
+  	public boolean isDynamicProductImageDisplay(WebDriver driver,String imageName) {
+  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_IMAGE,imageName);
+  		return isControlDisplay(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_IMAGE,imageName);
+  	}
+	public boolean isDynamicProductNameDisplay(WebDriver driver,String productName) {
+  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_NAME,productName);
+  		return isControlDisplay(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_NAME,productName);
+  	}
+	public boolean isDynamicProductPriceDisplay(WebDriver driver,String productName, String expectPrice) {
+  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_PRICE,productName);
+  		String actualPrice = getTextElement(driver,live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_PRICE,productName);
+  		return actualPrice.trim() ==expectPrice;
+  	}
+	public boolean isDynamicProductAddToCartDisplay(WebDriver driver,String productName) {
+  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_TO_CART_BUTTON,productName);
+  		return isControlDisplay(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_TO_CART_BUTTON,productName);
+  	}
+	public boolean isDynamicProductAddToWishlistOrCompareButton(WebDriver driver,String productName,String wishlistOrCompareButtonname) {
+  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_WISHLIST_OR_COMPARE,productName,wishlistOrCompareButtonname);
+  		return isControlDisplay(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_WISHLIST_OR_COMPARE,productName,wishlistOrCompareButtonname);
   	}
 }

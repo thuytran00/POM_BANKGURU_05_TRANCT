@@ -3,16 +3,24 @@ package commons;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.logging.Log;
+import org.junit.Assert;
+import org.openqa.jetty.log.LogFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Reporter;
+
 
 import page.objects.LoginPageObject;
 
 public class AbstractTest {
 	WebDriver driver;
-	
+	protected final Log log;
+	protected AbstractTest() {
+		log = LogFactory.getLog(getClass());
+	}
 	public WebDriver OpenMultiBrowser(String browserName, String url) {
 		 if(browserName.equals("chrome")) {
 			 System.setProperty("webdriver.chrome.driver", ".\\resource\\chromedriver.exe");
@@ -40,5 +48,34 @@ public class AbstractTest {
 		  int n= rand.nextInt(999999)+1;
 		  return n;
 	  }
-
+	  private boolean checkPassed(boolean condition) {
+		  boolean pass =true;
+		  try {
+			  if(condition == true)
+				log.info("==PASS==");
+			  else
+				  log.info("==FAILED==");
+			  Assert.assertTrue(condition);
+			
+		  }catch(Throwable e) {
+			  pass=false;
+			  Reporter.getCurrentTestResult().setThrowable(e);
+		  }
+		  return pass;
+	  }
+	  private boolean checkFailed(boolean condition) {
+		  boolean pass = true;
+		  try {
+			  
+			  Assert.assertTrue(condition);
+			
+		  }catch(Throwable e) {
+			  pass=false;
+			  Reporter.getCurrentTestResult().setThrowable(e);
+		  }
+		  return pass;
+	  }
+	  protected boolean verifyTrue(boolean condition) {
+		  return checkPassed(condition);
+	  }
 }
