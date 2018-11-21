@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="LIVE GURU" parallel="tests" thread-count="1">
 <parameter name="url" value="http://live.guru99.com" />
-   <test name="Run live on Firefox">
-  	<parameter name="browser" value="firefox" />
+<!--    <test name="Run live on chrome"> -->
+<!--   	<parameter name="browser" value="chrome" /> -->
+<!--     <classes> -->
+<!--       <class name="com.liveguru.account.Account_01_RegisterandLogin"/> -->
+     
+<!--     </classes> -->
+<!--     </test>  -->
+<!--     <test name="Run live on Firefox"> -->
+<!--   	<parameter name="browser" value="firefox" /> -->
+<!--     <classes> -->
+<!--       <class name="com.liveguru.account.Account_01_RegisterandLogin"/> -->
+     
+<!--     </classes> -->
+<!--    </test> -->
+<!--     <test name="Run live on chromeheadless"> -->
+<!--   	<parameter name="browser" value="chromeheadless" /> -->
+<!--     <classes> -->
+<!--       <class name="com.liveguru.account.Account_01_RegisterandLogin"/> -->
+     
+<!--     </classes> -->
+<!--    </test> -->
+    <test name="Run live on ie">
+  	<parameter name="browser" value="ie" />
     <classes>
       <class name="com.liveguru.account.Account_01_RegisterandLogin"/>
      
     </classes>
    </test>
-</suite> <!-- Suite -->
+</suite> 
+<!-- Suite -->

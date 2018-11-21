@@ -368,12 +368,22 @@ public class AbstractPage {
   	/*LIVE GURU PAGE*/
   	public MyAccountPageObject openMyAccountPage(WebDriver driver) {
   		waitForControlVisible(driver, LoginPageUI.ACCOUNT_LINK,"My Account");
-  		clickToElement(driver, LoginPageUI.ACCOUNT_LINK,"My Account");
+  		//clickToElement(driver, LoginPageUI.ACCOUNT_LINK,"My Account");
+  		if(driver.toString().toLowerCase().contains("internetexplorer")) {
+  			clickToElementByJS(driver,LoginPageUI.ACCOUNT_LINK,"My Account");
+  			sleepWithDynamicTimeout(5);
+  		}else {
+  			clickToElement(driver, LoginPageUI.ACCOUNT_LINK,"My Account");
+  		}
   		return live.pageObjects.PageFactoryManager.getMyAccountPage(driver);
   	}
   	public AbstractPage clickToDynamicButton(WebDriver driver, String titleName) {
   		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_BUTTON,titleName);
   		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_BUTTON,titleName);
+  		if(driver.toString().toLowerCase().contains("internetexplorer")) {
+  			
+  			sleepWithDynamicTimeout(5);
+  		}
   		return null;
   		//return live.pageObjects.PageFactoryManager.getRegisterPage(driver);
   	}
@@ -388,13 +398,18 @@ public class AbstractPage {
   		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LABEL_TEXT, "Account");
   		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LINK,"Log Out");
   		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LINK,"Log Out");
+  		if(driver.toString().toLowerCase().contains("internetexplorer")) {
+  			sleepWithDynamicTimeout(5);
+  		}
   		//return null;
   		return live.pageObjects.PageFactoryManager.getHomePage(driver);
   	}
   	public AbstractPage openDynamicLiveGurupage(WebDriver driver,String pageName) {
   		waitForControlVisible(driver,live.pageUIs.AbstractPageUI.DYNAMIC_COMMON_LINK,pageName );
   		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_COMMON_LINK,pageName);
-  		
+  		if(driver.toString().toLowerCase().contains("internetexplorer")) {
+  			sleepWithDynamicTimeout(5);
+  		}
   		switch(pageName) {
   		case "Mobile":
   			return live.pageObjects.PageFactoryManager.getMobilePage(driver);
@@ -425,4 +440,33 @@ public class AbstractPage {
   		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_WISHLIST_OR_COMPARE,productName,wishlistOrCompareButtonname);
   		return isControlDisplay(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_WISHLIST_OR_COMPARE,productName,wishlistOrCompareButtonname);
   	}
+	public Object clickToElementByJS(WebElement element) {
+		JavascriptExecutor js =(JavascriptExecutor) driver;
+		return js.executeScript("arguments[0].click();", element);
+	}
+	public void sleepWithDynamicTimeout(long timeOut) {
+		try {
+			Thread.sleep(timeOut * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void quitBrowser(WebDriver driver) {
+		driver.quit();
+	}
+	public void closeBrowser(WebDriver driver) {
+		driver.close();
+	}
+	public Object clickToElementByJS(WebDriver driver, String locator) {
+		WebElement element = driver.findElement(By.xpath(locator));
+		JavascriptExecutor js =(JavascriptExecutor) driver;
+		return js.executeScript("arguments[0].click();", element);
+	}
+	public Object clickToElementByJS(WebDriver driver, String locator, String... value) {
+		locator = String.format(locator, (Object[])value);
+		WebElement element = driver.findElement(By.xpath(locator));
+		JavascriptExecutor js =(JavascriptExecutor) driver;
+		return js.executeScript("arguments[0].click();", element);
+	}
 }
