@@ -12,15 +12,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -68,13 +62,7 @@ public void beforeClass(String browserName, String urlName) {
 	 
 	 
   }
-  public int randomNumber()
-  {
-	  Random rand =new Random();
-	  int n= rand.nextInt(999999)+1;
-	  return n;
-  }
-
+  
   @AfterClass
   public void afterClass() {
 	  driver.quit();

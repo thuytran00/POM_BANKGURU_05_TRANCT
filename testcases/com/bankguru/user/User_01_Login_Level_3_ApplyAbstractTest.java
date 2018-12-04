@@ -85,12 +85,7 @@ public void beforeClass(String browserName, String urlName) {
 	  	  //withdraw -> edit
 		  editCustomerPage = new EditCustomerPageObject(driver);
   }
-  public int randomNumber()
-  {
-	  Random rand =new Random();
-	  int n= rand.nextInt(999999)+1;
-	  return n;
-  }
+ 
  
 
   @AfterClass

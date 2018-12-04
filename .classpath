@@ -6,7 +6,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="testdata"/>
 	<classpathentry kind="src" path="actions"/>
 	<classpathentry kind="src" path="interfaces"/>
 	<classpathentry excluding="**" kind="src" output="target/classes" path="resources">
@@ -20,8 +19,13 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/selenium-server-standalone-2.53.1.jar"/>
+	<classpathentry kind="lib" path="resources/jcommander-1.72.jar"/>
+	<classpathentry kind="lib" path="resources/testng-7.0.0-beta1.jar"/>
+	<classpathentry kind="lib" path="resources/reportng-1.1.4.jar"/>
+	<classpathentry kind="lib" path="resources/velocity-1.4.jar"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>

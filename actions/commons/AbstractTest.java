@@ -80,7 +80,7 @@ public class AbstractTest {
 		return driver;
 		
 	}
-	  public int randomNumber()
+	  public static int randomNumber()
 	  {
 		  Random rand =new Random();
 		  int n= rand.nextInt(999999)+1;

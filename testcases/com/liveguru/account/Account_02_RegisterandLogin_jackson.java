@@ -1,5 +1,6 @@
 package com.liveguru.account;
 
+import java.io.IOException;
 import java.util.Random;
 
 import org.junit.Assert;
@@ -8,6 +9,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import commons.AbstractTest;
 import live.pageObjects.HomePageObject;
@@ -18,41 +22,29 @@ import live.pageObjects.PageFactoryManager;
 import live.pageObjects.RegisterPageObject;
 import live.pageObjects.TVPageObject;
 import testData.Account;
+import testData.GetAccountData;
 
-public class Account_01_RegisterandLogin extends AbstractTest {
+public class Account_02_RegisterandLogin_jackson extends AbstractTest {
 	WebDriver driver;
 	private HomePageObject homePage;
 	private MyAccountPageObject myAccountPage;
 	private RegisterPageObject register;
-	private String lastname, firstName, email, password;
+	private String  email, password;
 	private MyDashbboardPageObject myDashboard;
 	private MobilePageObject mobilePage;
 	private String xperiaImageName, xperiaTitle, xperiaPrice, iphoneImageName, iphoneTitle, iphonePrice,
 			samsungImageName, samsungTitle, samsungPrice;
 	private TVPageObject tvPage;
+	private GetAccountData account;
 	// TODO Auto-generated method
 
-	@Parameters({ "browser", "url" })
+	@Parameters({ "browser", "url", "account" })
 
 	@BeforeClass
-	public void beforeClass(String browsername, String urlName) {
+	public void beforeClass(String browsername, String urlName, String accountData) throws JsonParseException, JsonMappingException, IOException {
 		driver = OpenMultiBrowser(browsername, urlName);
-
-		firstName = "Automation";
-		lastname = "Testing Online";
-		password = "123123";
+		account = GetAccountData.get(accountData);
 		email = Account.Register.EMAIL + randomNumber() + "@gmail.com";
-
-		xperiaImageName = "Xperia";
-		xperiaTitle = "Sony Xperia";
-		xperiaPrice = "$100.00";
-		iphoneImageName = "IPhone";
-		iphoneTitle = "IPhone";
-		iphonePrice = "$500.00";
-		samsungImageName = "Samsung Galaxy";
-		samsungTitle = "Samsung Galaxy";
-		samsungPrice = "$130.00";
-//homePage = new HomePageObject(driver);
 		homePage = PageFactoryManager.getHomePage(driver);
 	}
 
@@ -66,11 +58,11 @@ public class Account_01_RegisterandLogin extends AbstractTest {
 		register = new RegisterPageObject(driver);
 
 		log.info("Register - Step 03: Input to Firstname Textbox");
-		register.sendKeytoDynamicTextbox(driver, "firstname", Account.Register.FIRSTNAME);
-		register.sendKeytoDynamicTextbox(driver, "lastname", Account.Register.LASTNAME);
-		register.sendKeytoDynamicTextbox(driver, "email_address", email);
-		register.sendKeytoDynamicTextbox(driver, "password", Account.Register.PASSWORD);
-		register.sendKeytoDynamicTextbox(driver, "confirmation", Account.Register.PASSWORD);
+		register.sendKeytoDynamicTextbox(driver, "firstname", account.getFirstName());
+		register.sendKeytoDynamicTextbox(driver, "lastname", account.getLastName());
+		register.sendKeytoDynamicTextbox(driver, "email_address", account.getEmail()+ randomNumber() + "@gmail.com");
+		register.sendKeytoDynamicTextbox(driver, "password", account.getPassword());
+		register.sendKeytoDynamicTextbox(driver, "confirmation", account.getPassword());
 
 		// register.clickToDynamicButton(driver, "Register");
 
@@ -80,7 +72,7 @@ public class Account_01_RegisterandLogin extends AbstractTest {
 
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void TC_02_Login() {
 
 		myAccountPage = homePage.openMyAccountPage(driver);
@@ -91,7 +83,7 @@ public class Account_01_RegisterandLogin extends AbstractTest {
 		myDashboard.isMyDashboarDisplayed();
 	}
 
-	@Test
+	@Test(enabled=false)
 	public void TC_03_CheckProductDetail() {
 		// Open Mobile page
 		mobilePage = (MobilePageObject) myAccountPage.openDynamicLiveGurupage(driver, "Mobile");

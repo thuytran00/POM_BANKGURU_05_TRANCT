@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="LIVE GURU" parallel="tests" thread-count="1">
+	<parameter name="url" value="http://live.guru99.com" />
+<listeners>
+	<listener class-name="org.uncommons.reportng.HTMLReporter"/>
+	<listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+	
+</listeners>
+	<test name="Run live on chromeheadless">
+	<parameter name="browser" value="chrome" />
+	<parameter name="account" value =".\testcases\testData\Account.json"/>
+	<parameter name="customer" value =".\testcases\testData\Customer.json"/>
+	<parameter name="payment" value =".\testcases\testData\Payment.json"/>
+	<classes>
+	<class name="com.liveguru.account.Account_02_RegisterandLogin_jackson"/>
+
+	</classes>
+	</test>
+
+</suite>
+<!-- Suite -->
